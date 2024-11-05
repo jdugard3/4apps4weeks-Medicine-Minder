@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from './ui/card';
+import { Button } from './ui/button'; // Add this import
 import { Clock, Pill, AlertCircle, Trash, Edit } from 'lucide-react';
 import { format } from 'date-fns';
 
@@ -21,7 +22,6 @@ const MedicineCard = ({ medicine, onMarkTaken, onDelete, onEdit }) => {
 
   return (
     <Card>
-      {/* Updated CardHeader with enhanced name styling */}
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <div className="flex flex-col">
           <CardTitle className="text-xl font-bold text-blue-400 tracking-wide">
@@ -32,18 +32,22 @@ const MedicineCard = ({ medicine, onMarkTaken, onDelete, onEdit }) => {
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <button 
+          <Button
+            variant="ghost"
+            size="icon"
             onClick={() => onEdit(medicine)}
-            className="p-1 hover:bg-gray-700 rounded-full transition-colors"
+            className="hover:text-blue-400"
           >
-            <Edit className="w-4 h-4 text-gray-400 hover:text-blue-400" />
-          </button>
-          <button 
+            <Edit className="w-4 h-4" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
             onClick={handleDelete}
-            className="p-1 hover:bg-gray-700 rounded-full transition-colors"
+            className="hover:text-red-400"
           >
-            <Trash className="w-4 h-4 text-gray-400 hover:text-red-400" />
-          </button>
+            <Trash className="w-4 h-4" />
+          </Button>
           <div className={`p-1.5 rounded-full ${isTaken ? 'bg-green-500/10' : 'bg-blue-500/10'}`}>
             <Pill className={`w-5 h-5 ${isTaken ? 'text-green-400' : 'text-blue-400'}`} />
           </div>
@@ -68,12 +72,12 @@ const MedicineCard = ({ medicine, onMarkTaken, onDelete, onEdit }) => {
           )}
           
           {!isTaken && (
-            <button
+            <Button
               onClick={() => onMarkTaken(medicine.id)}
-              className="mt-4 w-full bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+              className="mt-4 w-full"
             >
               Mark as Taken
-            </button>
+            </Button>
           )}
         </div>
       </CardContent>

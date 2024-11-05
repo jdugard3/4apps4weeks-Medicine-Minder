@@ -3,6 +3,7 @@ import { Plus } from 'lucide-react';
 import DailySchedule from './components/DailySchedule';
 import MedicineList from './components/MedicineList';
 import AddMedicineForm from './components/AddMedicineForm';
+import { Button } from './components/ui/button';
 
 function App() {
   const [medicines, setMedicines] = useState(() => {
@@ -10,7 +11,7 @@ function App() {
     console.log('Loading saved medicines:', saved);
     return saved ? JSON.parse(saved) : [];
   });
-  
+
   const [isAddingMedicine, setIsAddingMedicine] = useState(false);
   const [editingMedicine, setEditingMedicine] = useState(null);
 
@@ -21,7 +22,7 @@ function App() {
   const addMedicine = (medicine) => {
     console.log('Adding/Editing medicine:', medicine);
     if (editingMedicine) {
-      setMedicines(medicines.map(med => 
+      setMedicines(medicines.map(med =>
         med.id === medicine.id ? medicine : med
       ));
       setEditingMedicine(null);
@@ -37,7 +38,7 @@ function App() {
 
   // Add this function that was missing
   const markMedicineAsTaken = (id) => {
-    setMedicines(medicines.map(med => 
+    setMedicines(medicines.map(med =>
       med.id === id ? { ...med, isTaken: true } : med
     ));
   };
@@ -53,21 +54,21 @@ function App() {
       <div className="max-w-4xl mx-auto px-4">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-2xl font-bold text-gray-100">Medicine Minder</h1>
-          <button
+          <Button
             onClick={() => {
               setEditingMedicine(null);
               setIsAddingMedicine(true);
             }}
-            className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+            className="flex items-center gap-2"
           >
             <Plus className="w-5 h-5" />
             Add Medicine
-          </button>
+          </Button>
         </div>
 
         <div>
           {isAddingMedicine ? (
-            <AddMedicineForm 
+            <AddMedicineForm
               onAdd={addMedicine}
               onCancel={() => {
                 setIsAddingMedicine(false);
@@ -82,13 +83,13 @@ function App() {
               </div>
             ) : (
               <div className="space-y-6">
-                <DailySchedule 
+                <DailySchedule
                   medicines={medicines}
                   onMarkTaken={markMedicineAsTaken}
                   onDelete={deleteMedicine}
                   onEdit={handleEdit}
                 />
-                <MedicineList 
+                <MedicineList
                   medicines={medicines}
                   onMarkTaken={markMedicineAsTaken}
                   onDelete={deleteMedicine}
